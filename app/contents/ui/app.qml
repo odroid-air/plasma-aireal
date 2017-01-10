@@ -25,6 +25,10 @@ import org.kde.kirigami 1.0 as Kirigami
 Kirigami.ApplicationWindow {
     id: root
 
+    property int pUnit: (Screen.desktopAvailableHeight / 200) * 2 // make sure we align half values to pixels
+    property int basePointSize: baseFontLabel.font.pointSize
+    property int titlePointSize: baseFontLabel.font.pointSize * 1.4
+
     header: Kirigami.ApplicationHeader {}
 
     globalDrawer: Kirigami.GlobalDrawer {
@@ -39,15 +43,27 @@ Kirigami.ApplicationWindow {
                 onTriggered: {
                     showPassiveNotification(text + " clicked");
                     pageStack.push(mainPageComponent);
+                    print("clicked ... " + text);
                 }
             },
             Kirigami.Action {
-                text: "Settings"
-                iconName: "folder-sync"
-                        onTriggered: {
-                            showPassiveNotification(text + " clicked");
-                            pageStack.push(settingsComponent);
-                        }
+                text: "LEDs"
+                iconName: "view-list-icons"
+                onTriggered: {
+                    showPassiveNotification(text + " clicked");
+                    pageStack.pop();
+                    pageStack.push(ledPageComponent);
+                    print("clicked ... " + text);
+                }
+            },
+            Kirigami.Action {
+                text: "Sensors"
+                iconName: "view-list-icons"
+                onTriggered: {
+                    showPassiveNotification(text + " clicked");
+                    pageStack.push(sensorsPageComponent);
+                    print("clicked ... " + text);
+                }
             }
         ]
 
@@ -56,7 +72,8 @@ Kirigami.ApplicationWindow {
         id: contextDrawer
     }
 
-    pageStack.initialPage: mainPageComponent
+    //pageStack.initialPage: mainPageComponent
+    pageStack.initialPage: ledPageComponent
 
     Component {
         id: settingsComponent
@@ -78,6 +95,20 @@ Kirigami.ApplicationWindow {
     Component {
         id: mainPageComponent
         MainPage {}
+    }
+
+    Component {
+        id: ledPageComponent
+        LEDs {}
+    }
+
+    Component {
+        id: sensorsPageComponent
+        Sensors {}
+    }
+
+    Controls.Label {
+        id: baseFontLabel
     }
 
 }

@@ -32,15 +32,13 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 Kirigami.ScrollablePage {
     id: pageRoot
 
-    property int pUnit: (Screen.desktopAvailableHeight / 200) * 2 // make sure we align half values to pixels
-
     implicitWidth: Kirigami.Units.gridUnit * 20
 
     background: Rectangle {
         color: Kirigami.Theme.viewBackgroundColor
     }
 
-    title: "Aireal Intro"
+    title: "Sensors"
 
     ColumnLayout {
 
@@ -54,23 +52,29 @@ Kirigami.ScrollablePage {
         Controls.Label {
             // The id is used to reference this item from the
             // button's onClicked function
-            id: colorRect
+            font.pointSize: titlePointSize
 //             Layout.leftMargin: units.gridUnit
 //             Layout.rightMargin: units.gridUnit
             //font.pixelSize: pUnit * 3
             wrapMode: Text.WordWrap
             opacity: 0.8
-            text: "Plasma Aireal shows real-time information about environmental factors, such as air quality. It uses various sensors present in the system to display levels of different gases present in your surroundings.<br/><br/>Aireal runs on top of Netrunner Core, showcasing KDE Plasma's power on embedded devices. "
+            text: "Sensors"
 
             Layout.fillWidth: true
         }
-        LEDs {
-            // It's supposed to grow in both direction
+        Controls.Label {
+            wrapMode: Text.WordWrap
+            opacity: 0.8
+            text: "Showing the readings of various sensors connected to the system."
+
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.fillHeight: false
         }
 
+        Weather {
+            Layout.preferredHeight: units.gridUnit * 14
+            Layout.preferredWidth: units.gridUnit * 14
+        }
     }
-
 }
 
