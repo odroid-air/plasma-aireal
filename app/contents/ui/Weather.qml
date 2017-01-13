@@ -26,15 +26,23 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 // import org.kde.plasma.components 2.0 as PlasmaComponents
 // import org.kde.plasma.extras 2.0 as PlasmaExtras
 
+import org.kde.kgpio 1.0 as KGpio
+
 PlasmaCore.IconItem {
     id: weatherIcon
 
     source: "weather-few-clouds"
     opacity: 0.8
 
+    KGpio.ThermoSensor {
+        id: thermo
+        sensorId: "28-0000080b1db9"
+    }
+
+
     Controls.Label {
         id: temperatureLabel
-        text: "26.4°"
+        text: Math.round(thermo.temperature) + "°"
         font.pixelSize: parent.height / 8
         anchors {
             bottom: parent.bottom
