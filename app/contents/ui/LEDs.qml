@@ -43,10 +43,10 @@ Kirigami.ScrollablePage {
 
     ColumnLayout {
 
-        anchors {
-            fill: parent
-            margins: units.gridUnit
-        }
+//         anchors {
+//             fill: parent
+//             margins: units.gridUnit
+//         }
 
         spacing: units.gridUnit
 
