@@ -42,11 +42,6 @@ Kirigami.ScrollablePage {
 
     ColumnLayout {
 
-        anchors {
-            fill: parent
-            margins: units.gridUnit
-        }
-
         spacing: pUnit
 
         Controls.Label {
@@ -71,10 +66,17 @@ Kirigami.ScrollablePage {
             Layout.fillHeight: false
         }
 
-        Weather {
-            Layout.preferredHeight: units.gridUnit * 14
-            Layout.preferredWidth: units.gridUnit * 14
+        TemperatureSensor {
+            Layout.fillWidth: true
+            Layout.preferredHeight: units.gridUnit * 8
         }
+
+        Weather {
+            Layout.preferredHeight: units.gridUnit * 20
+            Layout.preferredWidth: units.gridUnit * 20
+        }
+
+
     }
 }
 

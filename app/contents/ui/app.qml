@@ -18,6 +18,7 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Window 2.2
 import QtQuick.Controls 1.2 as Controls
 import QtQuick.Layouts 1.2
 import org.kde.kirigami 1.0 as Kirigami
@@ -73,7 +74,7 @@ Kirigami.ApplicationWindow {
     }
 
     //pageStack.initialPage: mainPageComponent
-    pageStack.initialPage: ledPageComponent
+    pageStack.initialPage: sensorsPageComponent
 
     Component {
         id: settingsComponent
