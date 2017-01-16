@@ -64,10 +64,11 @@ Kirigami.ScrollablePage {
 
             Layout.fillWidth: true
         }
-        LEDs {
+        Weather {
             // It's supposed to grow in both direction
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.preferredHeight: units.gridUnit * 10
+            Layout.preferredWidth: units.gridUnit * 10
+            //Layout.fillWidth: false
         }
 
     }

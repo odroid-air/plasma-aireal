@@ -18,63 +18,29 @@
  */
 
 import QtQuick 2.3
-import QtQuick.Layouts 1.1
-import QtQuick.Window 2.2
-import QtQuick.Controls 1.2 as Controls
-
-import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-
-import org.kde.kirigami 1.0 as Kirigami
 
 import org.kde.kgpio 1.0 as KGpio
 
 
-ColumnLayout {
+Item {
+
+    property alias brightness: light.brightness
+    property alias temperature: thermo.temperature
+    property alias leds: gpio.pins
+
+    KGpio.KGpioController {
+        id: gpio
+    }
 
     KGpio.LightSensor {
         id: light
         number: 104
     }
 
-    Rectangle {
-        id: lightbar
-        border.width: 2
-        border.color: "black"
-        Layout.fillWidth: true
-        Layout.preferredHeight: units.gridUnit * 3
-        Rectangle { anchors.fill: parent; anchors.margins: parent.border.width; color: "black" ; opacity: 0.6 }
-        Rectangle {
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
-                leftMargin: parent.border.width
-                topMargin: parent.border.width
-                bottomMargin: parent.border.width
-            }
-            width: Math.min(parent.width, light.brightness * (parent.width - parent.border.width * 2) * sensitivitySlider.value)
-            color: "yellow"
-            //z: lightbar.z + 1
-        }
-
-    }
-    RowLayout {
-        Controls.Label {
-            text: "Sensitivity:"
-        }
-        Controls.Slider {
-            id: sensitivitySlider
-            Layout.fillWidth: true
-            minimumValue: 1
-            maximumValue: 50
-            value: 10
-        }
+    KGpio.ThermoSensor {
+        id: thermo
+        sensorId: "28-0000080b1db9"
     }
 
-    Controls.Label {
-        text: Math.round(light.brightness * 1000) / 1000
-    }
+
 }

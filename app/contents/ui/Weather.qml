@@ -34,15 +34,10 @@ PlasmaCore.IconItem {
     source: "weather-few-clouds"
     opacity: 0.8
 
-    KGpio.ThermoSensor {
-        id: thermo
-        sensorId: "28-0000080b1db9"
-    }
-
 
     Controls.Label {
         id: temperatureLabel
-        text: Math.round(thermo.temperature) + "°"
+        text: Math.round(sensors.temperature) + "°"
         font.pixelSize: parent.height / 8
         anchors {
             bottom: parent.bottom

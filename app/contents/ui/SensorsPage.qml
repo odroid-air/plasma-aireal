@@ -42,21 +42,8 @@ Kirigami.ScrollablePage {
 
     ColumnLayout {
 
-        spacing: pUnit
+        spacing: units.gridUnit / 2
 
-        Controls.Label {
-            // The id is used to reference this item from the
-            // button's onClicked function
-            font.pointSize: titlePointSize
-//             Layout.leftMargin: units.gridUnit
-//             Layout.rightMargin: units.gridUnit
-            //font.pixelSize: pUnit * 3
-            wrapMode: Text.WordWrap
-            opacity: 0.8
-            text: "Sensors"
-
-            Layout.fillWidth: true
-        }
         Controls.Label {
             wrapMode: Text.WordWrap
             opacity: 0.8
@@ -65,18 +52,29 @@ Kirigami.ScrollablePage {
             Layout.fillWidth: true
             Layout.fillHeight: false
         }
-
-        TemperatureSensor {
+        Controls.Label {
+            font.pointSize: titlePointSize
+            wrapMode: Text.WordWrap
+            opacity: 0.8
+            text: "Light Sensor"
             Layout.fillWidth: true
-            Layout.preferredHeight: units.gridUnit * 8
+        }
+        LightSensorItem {
+            Layout.fillWidth: true
+            Layout.preferredHeight: units.gridUnit * 4
         }
 
-        Weather {
-            Layout.preferredHeight: units.gridUnit * 20
-            Layout.preferredWidth: units.gridUnit * 20
+        Controls.Label {
+            font.pointSize: titlePointSize
+            wrapMode: Text.WordWrap
+            opacity: 0.8
+            text: "Temperature Sensor"
+            Layout.fillWidth: true
         }
-
-
+        TemperatureSensorItem {
+            Layout.fillWidth: true
+            Layout.preferredHeight: units.gridUnit * 4
+        }
     }
 }
 

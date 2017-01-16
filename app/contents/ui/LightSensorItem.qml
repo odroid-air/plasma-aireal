@@ -34,11 +34,6 @@ import org.kde.kgpio 1.0 as KGpio
 
 ColumnLayout {
 
-    KGpio.LightSensor {
-        id: light
-        number: 104
-    }
-
     Rectangle {
         id: lightbar
         border.width: 2
@@ -55,11 +50,18 @@ ColumnLayout {
                 topMargin: parent.border.width
                 bottomMargin: parent.border.width
             }
-            width: Math.min(parent.width, light.brightness * (parent.width - parent.border.width * 2) * sensitivitySlider.value)
+            width: Math.min((parent.width - parent.border.width * 2),
+                             sensors.brightness * (parent.width - parent.border.width * 2) * sensitivitySlider.value)
             color: "yellow"
-            //z: lightbar.z + 1
         }
-
+        Controls.Label {
+            text: Math.round(sensors.brightness * 1000) / 1000
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+                margins: units.gridUnit / 2
+            }
+        }
     }
     RowLayout {
         Controls.Label {
@@ -72,9 +74,5 @@ ColumnLayout {
             maximumValue: 50
             value: 10
         }
-    }
-
-    Controls.Label {
-        text: Math.round(light.brightness * 1000) / 1000
     }
 }

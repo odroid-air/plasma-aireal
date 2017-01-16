@@ -59,17 +59,13 @@ Kirigami.ScrollablePage {
             Layout.fillHeight: false
         }
 
-        KGpio.KGpioController {
-            id: gpio
-        }
-
         ListView {
             id: ledlist
 
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            model: gpio.pins
+            model: sensors.leds
             orientation: Qt.Horizontal
             spacing: units.gridUnit
             interactive: contentHeight > height
@@ -90,11 +86,10 @@ Kirigami.ScrollablePage {
                 color: ledColor(number);
                 opacity: burning ? 1.0 : 0.8
 
-                property bool burning: false
+                property bool burning: pinValue == KGpio.GpioPin.High
 
                 PlasmaComponents.Label {
                     anchors.centerIn: parent
-                    //text: ledColor(number) + " LED"
                     text: (pindelegate.burning ? "on" : "off")
                 }
 
@@ -120,13 +115,5 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-
-    //     PlasmaComponents.Label {
-    //         anchors {
-    //             right: ledlist.right
-    //             bottom: ledlist.bottom
-    //         }
-    //         text: "Pins: " + gpio.pins.length
-    //     }
     }
 }

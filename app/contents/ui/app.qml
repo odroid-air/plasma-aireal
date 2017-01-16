@@ -30,6 +30,8 @@ Kirigami.ApplicationWindow {
     property int basePointSize: baseFontLabel.font.pointSize
     property int titlePointSize: baseFontLabel.font.pointSize * 1.4
 
+    property Sensors sensors: Sensors {}
+
     header: Kirigami.ApplicationHeader {}
 
     globalDrawer: Kirigami.GlobalDrawer {
@@ -43,7 +45,7 @@ Kirigami.ApplicationWindow {
                 iconName: "view-list-icons"
                 onTriggered: {
                     showPassiveNotification(text + " clicked");
-                    pageStack.push(mainPageComponent);
+                    pageStack.replace(mainPageComponent);
                     print("clicked ... " + text);
                 }
             },
@@ -52,8 +54,8 @@ Kirigami.ApplicationWindow {
                 iconName: "view-list-icons"
                 onTriggered: {
                     showPassiveNotification(text + " clicked");
-                    pageStack.pop();
-                    pageStack.push(ledPageComponent);
+                    //pageStack.pop();
+                    pageStack.replace(ledPageComponent);
                     print("clicked ... " + text);
                 }
             },
@@ -62,7 +64,7 @@ Kirigami.ApplicationWindow {
                 iconName: "view-list-icons"
                 onTriggered: {
                     showPassiveNotification(text + " clicked");
-                    pageStack.push(sensorsPageComponent);
+                    pageStack.replace(sensorsPageComponent);
                     print("clicked ... " + text);
                 }
             }
@@ -74,7 +76,7 @@ Kirigami.ApplicationWindow {
     }
 
     //pageStack.initialPage: mainPageComponent
-    pageStack.initialPage: sensorsPageComponent
+    pageStack.initialPage: lightChartPageComponent
 
     Component {
         id: settingsComponent
@@ -105,11 +107,15 @@ Kirigami.ApplicationWindow {
 
     Component {
         id: sensorsPageComponent
-        Sensors {}
+        SensorsPage {}
+    }
+
+    Component {
+        id: lightChartPageComponent
+        LightChart {}
     }
 
     Controls.Label {
         id: baseFontLabel
     }
-
 }
