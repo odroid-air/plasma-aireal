@@ -52,7 +52,7 @@ Kirigami.ScrollablePage {
             id: lchart
 
             label: "Light Intensity"
-            yLabel: "Intensity"
+            //yLabel: "Intensity"
 
             yMin: 0.0
             yMax: 1.0 / sensitivitySlider.value

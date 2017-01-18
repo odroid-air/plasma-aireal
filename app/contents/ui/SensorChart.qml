@@ -92,24 +92,14 @@ ColumnLayout {
 
         ValueAxis {
             id: valueAxisX
-            // Hide the value axis; it is only used to map the line series to bar categories axis
-            visible: titleText != ""
             min: 0
             max: sChart.maxValue
-            //Math.max(10, lightlines.ix) // Math.max(10, lightlines.ix)
         }
 
         SplineSeries {
             id: lightlines
-            //name: "Light Intensity"
             axisX: valueAxisX
             axisY: valueAxisY
-            //capStyle: Qt.RoundCap
-//             XYPoint { x: 1; y: 3.3 }
-//             XYPoint { x: 2; y: 2.1 }
-//             XYPoint { x: 3; y: 4.9 }
-//             XYPoint { x: 4; y: 3.0 }
-//             XYPoint { x: 5; y: 3.3 }
         }
 
     }
