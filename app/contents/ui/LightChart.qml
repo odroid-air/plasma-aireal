@@ -48,12 +48,11 @@ Kirigami.ScrollablePage {
 
     ColumnLayout {
 
-        spacing: units.gridUnit / 2
-
         SensorChart {
             id: lchart
 
             label: "Light Intensity"
+            yLabel: "Intensity"
 
             yMin: 0.0
             yMax: 1.0 / sensitivitySlider.value
@@ -62,70 +61,75 @@ Kirigami.ScrollablePage {
             Layout.preferredHeight: units.gridUnit * 12
 
             Timer {
-//                 id: tt
-//                 property int ix: 0
                 repeat: true
                 interval: 1000
                 running: true
                 onTriggered: {
-//                     ix = ix+1
-//                     var x = ix + lchart.maxValue
                     lchart.recordValue(sensors.brightness);
                 }
             }
             Connections {
                 target: sensors
                 onBrightnessChanged: {
-                    //print("brightness is now " + sensors.brightness);
                     lchart.recordValue(sensors.brightness);
-                    //lightlines.append(tt.ix, sensors.brightness);
                 }
             }
-        }
-        RowLayout {
-            Controls.Label {
-                text: "Sensitivity:"
-            }
-            Controls.Slider {
-                id: sensitivitySlider
-                Layout.fillWidth: true
-                minimumValue: 1
-                maximumValue: 20
-                value: 6
-            }
-        }
-        Rectangle {
-            border.width: 2
-            border.color: "black"
-            Layout.fillWidth: true
-            Layout.preferredHeight: units.gridUnit * 2
-
-            Rectangle { anchors.fill: parent; anchors.margins: parent.border.width; color: "black" ; opacity: 0.6 }
             Rectangle {
+                border.width: 2
+                border.color: "black"
+                width: units.gridUnit * 10
+                height: units.gridUnit
                 anchors {
-                    left: parent.left
                     top: parent.top
-                    bottom: parent.bottom
-                    margins: parent.border.width
-                }
-                width: Math.min((parent.width - parent.border.width * 2),
-                                sensors.brightness * sensitivitySlider.value * (parent.width - parent.border.width * 2))
-                color: "yellow"
-            }
-            Controls.Label {
-                text: sensors.brightness
-                anchors {
                     right: parent.right
-                    bottom: parent.bottom
                     margins: units.gridUnit / 2
+                }
+                Rectangle { anchors.fill: parent; anchors.margins: parent.border.width; color: "black" ; opacity: 0.6 }
+                Rectangle {
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                        bottom: parent.bottom
+                        margins: parent.border.width
+                    }
+                    width: Math.min((parent.width - parent.border.width * 2),
+                                    sensors.brightness * sensitivitySlider.value * (parent.width - parent.border.width * 2))
+                    color: "yellow"
+                }
+                Controls.Label {
+                    text: Math.round(sensors.brightness * 100000) / 100000
+                    font.pointSize: 8
+                    anchors {
+                        right: parent.right
+                        rightMargin: units.gridUnit / 2
+                        verticalCenter: parent.verticalCenter
+                    }
+                }
+                RowLayout {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.bottom
+                    }
+                    Controls.Label {
+                        text: "Sensitivity:"
+                    }
+                    Controls.Slider {
+                        id: sensitivitySlider
+                        Layout.fillWidth: true
+                        minimumValue: 1
+                        maximumValue: 20
+                        value: 6
+                    }
                 }
             }
         }
 
         SensorChart {
             id: tchart
-            label: "Temperature (C)"
+            label: "Temperature (°C)"
             text: "Temperature"
+            yLabel: "Temperature"
 
             yMin: 15.0
             yMax: 28.0
@@ -138,6 +142,14 @@ Kirigami.ScrollablePage {
                 running: true
                 onTriggered: {
                     tchart.recordValue(sensors.temperature);
+                }
+            }
+            Controls.Label {
+                text: Math.round(sensors.temperature * 100) / 100 + "°C"
+                anchors {
+                    right: parent.right
+                    margins: units.gridUnit / 2
+                    top: parent.top
                 }
             }
         }

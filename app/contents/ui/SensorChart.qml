@@ -36,8 +36,6 @@ ColumnLayout {
     property alias chart: lightChart
     property int maxValue: 100
 
-
-
     property alias xLabel: valueAxisX.titleText
     property alias yLabel: valueAxisY.titleText
     property alias yMin: valueAxisY.min
@@ -63,26 +61,33 @@ ColumnLayout {
 
     spacing: units.gridUnit / 2
 
-    Controls.Label {
-        id: headerlabel
-        wrapMode: Text.WordWrap
-        opacity: 0.8
-        font.pointSize: 16
-        text: "Light Sensor"
-        Layout.fillWidth: true
-    }
     ChartView {
         id: lightChart
         Layout.fillWidth: true
         Layout.fillHeight: true
         antialiasing: true
+        //theme: ChartView.ChartThemeBlueCerulean
+        theme: ChartView.ChartThemeDark
+
+        Controls.Label {
+            id: headerlabel
+            wrapMode: Text.WordWrap
+            opacity: 0.8
+            font.pointSize: 16
+            text: "Light Sensor"
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: units.gridUnit / 2
+            }
+
+        }
 
         ValueAxis {
             id: valueAxisY
             min: 0
             max: 1.0
             visible: titleText != ""
-            titleText: "Intensity"
         }
 
         ValueAxis {
@@ -94,11 +99,12 @@ ColumnLayout {
             //Math.max(10, lightlines.ix) // Math.max(10, lightlines.ix)
         }
 
-        LineSeries {
+        SplineSeries {
             id: lightlines
             //name: "Light Intensity"
             axisX: valueAxisX
             axisY: valueAxisY
+            //capStyle: Qt.RoundCap
 //             XYPoint { x: 1; y: 3.3 }
 //             XYPoint { x: 2; y: 2.1 }
 //             XYPoint { x: 3; y: 4.9 }
