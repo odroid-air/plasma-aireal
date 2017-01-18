@@ -50,54 +50,55 @@ Kirigami.ScrollablePage {
 
         spacing: units.gridUnit / 2
 
-        Controls.Label {
-            font.pointSize: titlePointSize
-            wrapMode: Text.WordWrap
-            opacity: 0.8
-            text: "Light Sensor"
-            Layout.fillWidth: true
-        }
-        ChartView {
-            id: lightChart
+        SensorChart {
+            id: lchart
+
+            label: "Light Intensity"
+
+            yMin: 0.0
+            yMax: 1.0 / sensitivitySlider.value
+
             Layout.fillWidth: true
             Layout.preferredHeight: units.gridUnit * 12
-//             Layout.fillHeight: true
-            //theme: ChartView.ChartThemeBrownSand
-            antialiasing: true
 
-            LineSeries {
-                id: lightlines
-                name: "LineSeries"
-                XYPoint { x: 0; y: 0 }
-//                 XYPoint { x: 1.1; y: 2.1 }
-//                 XYPoint { x: 1.9; y: 3.3 }
-//                 XYPoint { x: 2.1; y: 2.1 }
-//                 XYPoint { x: 2.9; y: 4.9 }
-//                 XYPoint { x: 3.4; y: 3.0 }
-//                 XYPoint { x: 4.1; y: 3.3 }
-            }
             Timer {
-                id: tt
-                property int ix: 0
-                interval: 100
+//                 id: tt
+//                 property int ix: 0
+                repeat: true
+                interval: 1000
                 running: true
-                onTriggered: ix = ix+1
+                onTriggered: {
+//                     ix = ix+1
+//                     var x = ix + lchart.maxValue
+                    lchart.recordValue(sensors.brightness);
+                }
             }
             Connections {
                 target: sensors
                 onBrightnessChanged: {
-                    print("brightness is now " + sensors.brightness);
-                    lightlines.append(tt.ix, sensors.brightness);
+                    //print("brightness is now " + sensors.brightness);
+                    lchart.recordValue(sensors.brightness);
+                    //lightlines.append(tt.ix, sensors.brightness);
                 }
             }
         }
-
+        RowLayout {
+            Controls.Label {
+                text: "Sensitivity:"
+            }
+            Controls.Slider {
+                id: sensitivitySlider
+                Layout.fillWidth: true
+                minimumValue: 1
+                maximumValue: 20
+                value: 6
+            }
+        }
         Rectangle {
             border.width: 2
             border.color: "black"
             Layout.fillWidth: true
-            //Layout.fillHeight: false
-            Layout.preferredHeight: unitsgridUnit * 2
+            Layout.preferredHeight: units.gridUnit * 2
 
             Rectangle { anchors.fill: parent; anchors.margins: parent.border.width; color: "black" ; opacity: 0.6 }
             Rectangle {
@@ -108,7 +109,7 @@ Kirigami.ScrollablePage {
                     margins: parent.border.width
                 }
                 width: Math.min((parent.width - parent.border.width * 2),
-                                sensors.brightness * (parent.width - parent.border.width * 2))
+                                sensors.brightness * sensitivitySlider.value * (parent.width - parent.border.width * 2))
                 color: "yellow"
             }
             Controls.Label {
@@ -120,8 +121,26 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-    //     Controls.Label {
-    //         text: sensors.temperature + " scale: " + ((sensors.temperature + 20.0) / 60)
-    //     }
+
+        SensorChart {
+            id: tchart
+            label: "Temperature (C)"
+            text: "Temperature"
+
+            yMin: 15.0
+            yMax: 28.0
+
+            Layout.fillWidth: true
+            Layout.preferredHeight: units.gridUnit * 12
+            Timer {
+                repeat: true
+                interval: 1000
+                running: true
+                onTriggered: {
+                    tchart.recordValue(sensors.temperature);
+                }
+            }
+        }
+
     }
 }

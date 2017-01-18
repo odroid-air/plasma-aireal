@@ -39,12 +39,14 @@ Kirigami.ApplicationWindow {
         titleIcon: "applications-graphics"
         bannerImageSource: "banner.jpg"
 
+        //Layout.maximumWidth: units.gridUnit * 12
+
         actions: [
             Kirigami.Action {
                 text: "Overview"
                 iconName: "view-list-icons"
                 onTriggered: {
-                    showPassiveNotification(text + " clicked");
+                    //showPassiveNotification(text + " clicked");
                     pageStack.replace(mainPageComponent);
                     print("clicked ... " + text);
                 }
@@ -53,9 +55,19 @@ Kirigami.ApplicationWindow {
                 text: "LEDs"
                 iconName: "view-list-icons"
                 onTriggered: {
-                    showPassiveNotification(text + " clicked");
+                    //showPassiveNotification(text + " clicked");
                     //pageStack.pop();
                     pageStack.replace(ledPageComponent);
+                    print("clicked ... " + text);
+                }
+            },
+            Kirigami.Action {
+                text: "Light"
+                iconName: "view-list-icons"
+                onTriggered: {
+                    //showPassiveNotification(text + " clicked");
+                    //pageStack.pop();
+                    pageStack.replace(lightChartPageComponent);
                     print("clicked ... " + text);
                 }
             },
@@ -63,7 +75,7 @@ Kirigami.ApplicationWindow {
                 text: "Sensors"
                 iconName: "view-list-icons"
                 onTriggered: {
-                    showPassiveNotification(text + " clicked");
+                    //showPassiveNotification(text + " clicked");
                     pageStack.replace(sensorsPageComponent);
                     print("clicked ... " + text);
                 }
